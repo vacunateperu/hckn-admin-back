@@ -2,11 +2,11 @@ const { Sequelize } = require('sequelize');
 
 // Option 1: Passing a connection URI
 export const sequelize = new Sequelize(
-    'hckn_db', //db_name
-    'postgres', //username
-    'root', //password
+    'vacunatepe', //db_name
+    'vacunatepeuser', //username
+    'v@cu_nat3p@E', //password
     {
-        host: 'localhost',
+        host: '2.tcp.ngrok.io',
         dialect: 'postgres', 
         pool: {
             max: 5,
@@ -15,6 +15,5 @@ export const sequelize = new Sequelize(
             idle: 10000
         },
         logging: false //VER MENSAJES POR CONSOLA
-        
     }
-    );
+);

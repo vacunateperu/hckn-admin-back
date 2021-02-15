@@ -10,7 +10,7 @@ const app = express();
 // -----------------------------------------------------------------------
 //                              ROUTES IMPORTS
 // -----------------------------------------------------------------------
-import indexRoutes from './routes/index.route';
+import personaRoutes from './routes/persona.route';
 
 // -----------------------------------------------------------------------
 //                              CONFIGURACIÓN
@@ -27,7 +27,7 @@ app.use(express.json());
 // -----------------------------------------------------------------------
 //                             USO DE LAS RUTAS
 // -----------------------------------------------------------------------
-app.use('/api', indexRoutes);
+app.use('/api', personaRoutes);
 
 
 // Folder para almacenar archivos públicos (No se utilizará)
