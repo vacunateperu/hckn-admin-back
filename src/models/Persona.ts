@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database')
 
-const Persona = sequelize.define('personal',{
+const Persona = sequelize.define('persona',{
     id_persona:{
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -37,12 +37,6 @@ const Persona = sequelize.define('personal',{
     id_distrito: {
         type: DataTypes.STRING(6)
     },
-    id_provincia: {
-        type: DataTypes.STRING(4)
-    },
-    id_departamento: {
-        type: DataTypes.STRING(2)
-    },
     code_ocupacion: {
         type: DataTypes.STRING(3)
     },
@@ -50,7 +44,8 @@ const Persona = sequelize.define('personal',{
         type: DataTypes.FLOAT(5)
     }
 },{
-    timestamps: false
+    timestamps: false,
+    freezeTableName: true
 }
 );
 

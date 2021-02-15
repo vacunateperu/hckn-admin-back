@@ -1,5 +1,6 @@
 import Persona from "../models/Persona";
 import { Request, Response } from 'express';
+import { sequelize } from "../config/database";
 const { Op } = require("sequelize");
 
 export async function getVulnerablePorDepartamento(req: Request, res: Response) {
@@ -43,12 +44,10 @@ export async function getVulnerablePorProvincia(req: Request, res: Response) {
 export async function getVulnerablePorDistrito(req: Request, res: Response) {
     try {
         const personas = await Persona.findAll({
-            where:{
-                visible: true
-            },
-            order:[
-                ['pre','DESC']
-            ]
+            attributes:['id_distrito',
+                [ sequelize.fn('avg',sequelize.col('prob_vulnerabilidad')),'prom_vulnerabilidad']
+            ]       ,
+            group: 'id_distrito'
         });
         res.json({
             data: personas
