@@ -6,14 +6,12 @@ const { Op } = require("sequelize");
 export async function getVulnerablePorDepartamento(req: Request, res: Response) {
     try {
         const personas = await Persona.findAll({
-            where: {
-                prob_vulnerabilidad:{
-                    [Op.gt]: 0.5
-                }
-            },
-            order:[
-                ['id_distrito','DESC']
-            ]
+            attributes: [
+                [sequelize.literal('SUBSTRING(id_distrito, 1, 2)'), 'id_departamento'],
+                [sequelize.fn('avg', sequelize.col('prob_vulnerabilidad')), 'prom_vulnerabilidad']
+            ],
+            group: sequelize.literal('SUBSTRING(id_distrito, 1, 2)')
+
         });
         res.json({
             data: personas
@@ -26,12 +24,12 @@ export async function getVulnerablePorDepartamento(req: Request, res: Response) 
 export async function getVulnerablePorProvincia(req: Request, res: Response) {
     try {
         const personas = await Persona.findAll({
-            where:{
-                visible: true
-            },
-            order:[
-                ['pre','DESC']
-            ]
+            attributes: [
+                [sequelize.literal('SUBSTRING(id_distrito, 1, 4)'), 'id_provincia'],
+                [sequelize.fn('avg', sequelize.col('prob_vulnerabilidad')), 'prom_vulnerabilidad']
+            ],
+            group: sequelize.literal('SUBSTRING(id_distrito, 1, 4)')
+
         });
         res.json({
             data: personas
@@ -44,9 +42,9 @@ export async function getVulnerablePorProvincia(req: Request, res: Response) {
 export async function getVulnerablePorDistrito(req: Request, res: Response) {
     try {
         const personas = await Persona.findAll({
-            attributes:['id_distrito',
-                [ sequelize.fn('avg',sequelize.col('prob_vulnerabilidad')),'prom_vulnerabilidad']
-            ]       ,
+            attributes: ['id_distrito',
+                [sequelize.fn('avg', sequelize.col('prob_vulnerabilidad')), 'prom_vulnerabilidad']
+            ],
             group: 'id_distrito'
         });
         res.json({
