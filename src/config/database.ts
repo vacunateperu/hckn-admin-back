@@ -6,9 +6,9 @@ export const sequelize = new Sequelize(
     'vacunatepeuser', //username
     'v@cu_nat3p@E', //password
     {
-        host: '2.tcp.ngrok.io',
+        host: '4.tcp.ngrok.io',
         dialect: 'postgres', 
-        port: '12171',
+        port: '12208',
         pool: {
             max: 5,
             min: 0,
