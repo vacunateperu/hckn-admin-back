@@ -3,7 +3,7 @@ import { Router } from 'express';
 // -----------------------------------------------------------------------
 //                       FUNCIONES DEL CONTROLADOR
 // -----------------------------------------------------------------------
-import { getVulnerablesDepartamentos,getVulnerablePorDepartamento, getVulnerablePorProvincia, getVulnerablePorDistrito, getVulnerablePorProvinciaByDepartamento, getVulnerablePorDistritoByProvincia, getVulnerablesProvincias, getVulnerablesDistritos } from '../controllers/persona.controller';
+import { getVulnerablesDepartamentos,getVulnerablePorDepartamento, getVulnerablePorProvincia, getVulnerablePorDistrito, getVulnerablePorProvinciaByDepartamento, getVulnerablePorDistritoByProvincia, getVulnerablesProvincias, getVulnerablesDistritos, getRangosByDistrito } from '../controllers/persona.controller';
 
 
 const router = Router();
@@ -27,7 +27,7 @@ router.route('/dist/:id_provincia')
     .get(getVulnerablePorDistritoByProvincia);
 
 router.route('/dist/:id_distrito/rango')
-    .get(getVulnerablePorDistritoByProvincia);
+    .get(getRangosByDistrito);
 
 router.route('/tablaDept/')
     .get(getVulnerablesDepartamentos);
