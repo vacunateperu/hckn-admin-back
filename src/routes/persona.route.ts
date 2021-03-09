@@ -32,10 +32,10 @@ router.route('/dist/:id_distrito/rango')
 router.route('/tablaDept/')
     .get(getVulnerablesDepartamentos);
 
-router.route('/tablaProv/')
+router.route('/tablaProv/:id_departamento')
     .get(getVulnerablesProvincias);
 
-router.route('/tablaDist/')
+router.route('/tablaDist/:id_provincia')
     .get(getVulnerablesDistritos);
 
 export default router;

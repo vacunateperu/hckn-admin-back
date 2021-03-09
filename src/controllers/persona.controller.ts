@@ -124,12 +124,18 @@ export async function getVulnerablesDepartamentos(req: Request, res: Response) {
 // -----------------------------------------------------------------------------------------------------
 export async function getVulnerablesProvincias(req: Request, res: Response) {
     try {
+        const { id_departamento } = req.params;
         const personas = await Persona.findAll({
             attributes: [
                 [sequelize.literal('SUBSTRING(id_distrito, 1, 4)'), 'id_provincia'],
                 [sequelize.fn('COUNT', sequelize.col('id_persona')), 'personas'],'sexo',
                 [sequelize.fn('avg', sequelize.col('prob_vulnerabilidad')), 'prom_vulnerabilidad']
             ],
+            where: {
+                id_distrito: {
+                    [Op.like]: `${id_departamento}%`
+                }
+            },
             group: sequelize.literal('SUBSTRING(id_distrito, 1, 4), sexo'),
             order: [sequelize.literal('SUBSTRING(id_distrito, 1, 4)')]
         });
@@ -143,12 +149,18 @@ export async function getVulnerablesProvincias(req: Request, res: Response) {
 // -----------------------------------------------------------------------------------------------------
 export async function getVulnerablesDistritos(req: Request, res: Response) {
     try {
+        const { id_provincia } = req.params;
         const personas = await Persona.findAll({
             attributes: [
                 'id_distrito',
                 [sequelize.fn('COUNT', sequelize.col('id_persona')), 'personas'],'sexo',
                 [sequelize.fn('avg', sequelize.col('prob_vulnerabilidad')), 'prom_vulnerabilidad']
             ],
+            where: {
+                id_distrito: {
+                    [Op.like]: `${id_provincia}%`
+                }
+            },
             group: ['id_distrito','sexo'],
             order: ['id_distrito']
         });
