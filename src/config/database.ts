@@ -8,7 +8,7 @@ export const sequelize = new Sequelize(
     {
         host: '4.tcp.ngrok.io',
         dialect: 'postgres', 
-        port: '18163',
+        port: '15694',
         pool: {
             max: 5,
             min: 0,
