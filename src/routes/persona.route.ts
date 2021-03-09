@@ -26,6 +26,9 @@ router.route('/prov/:id_departamento')
 router.route('/dist/:id_provincia')
     .get(getVulnerablePorDistritoByProvincia);
 
+router.route('/dist/:id_distrito/rango')
+    .get(getVulnerablePorDistritoByProvincia);
+
 router.route('/tablaDept/')
     .get(getVulnerablesDepartamentos);
 
