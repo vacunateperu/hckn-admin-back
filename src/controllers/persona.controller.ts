@@ -54,7 +54,6 @@ export async function getVulnerablePorDistrito(req: Request, res: Response) {
     }
 }
 
-
 export async function getVulnerablePorProvinciaByDepartamento(req: Request, res: Response) {
     try {
         const { id_departamento } = req.params;
@@ -100,5 +99,47 @@ export async function getVulnerablePorDistritoByProvincia(req: Request, res: Res
     } catch (e) {
         console.log(e);
     }
+}
+
+export async function getRangosByDistrito(req: Request, res: Response) {    
+
+    try {
+        const { id_distrito} = req.params;
+
+        const personas = await Persona.findAll({
+            attributes:[
+                [sequelize.literal(`case 
+                when prob_vulnerabilidad between 0.0 and 0.1 then '0.0-0.1'
+                when prob_vulnerabilidad between 0.1 and 0.2 then '0.1-0.2'
+                when prob_vulnerabilidad between 0.2 and 0.3 then '0.2-0.3'
+                when prob_vulnerabilidad between 0.3 and 0.4 then '0.3-0.4'
+                when prob_vulnerabilidad between 0.4 and 0.5 then '0.4-0.5'
+                when prob_vulnerabilidad between 0.5 and 0.6 then '0.5-0.6'
+                when prob_vulnerabilidad between 0.6 and 0.7 then '0.6-0.7'
+                when prob_vulnerabilidad between 0.7 and 0.8 then '0.7-0.8'
+                when prob_vulnerabilidad between 0.8 and 0.9 then '0.8-0.9'
+                when prob_vulnerabilidad between 0.9 and 1.0 then '0.9-1.0'
+                end`),'nombre'],
+                [sequelize.literal(`count(*)`),'prom_vulnerabilidad'] //NOMBRES FAKE PARA LA GRAFICA BARRA
+            ],
+            where: {
+                id_distrito
+            },
+            group: 
+             [sequelize.literal(`1`)],
+            raw: true
+
+        });
+
+
+        res.json({
+            data: personas
+        })
+
+    }catch(e){
+        console.log(e)
+    }
+
+    
 }
 
